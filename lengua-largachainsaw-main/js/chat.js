@@ -2,7 +2,7 @@
 // Usage: import this script in a page that defines appendMessage(role, text, meta?)
 // and optionally provides window.FallbackKB.reply(text, { locale }) for local replies.
 
-const API_BASE = "https://withered-mouse-9aee.grabem-holdem-nuts-right.workers.dev";
+const API_BASE = "https://llm-chattia.grabem-holdem-nuts-right.workers.dev";
 
 async function sendMessage(userText) {
   // 1) Show user's message
