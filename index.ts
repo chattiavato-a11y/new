@@ -7,7 +7,7 @@
  *
  * @license MIT
  */
-import { Env, ChatMessage } from "./types";
+import { Env, ChatMessage } from "./llm-chat-app-template-main/src/types";
 
 // Model ID for Workers AI model
 // https://developers.cloudflare.com/workers-ai/models/
