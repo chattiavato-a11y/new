@@ -1,16 +1,9 @@
 // server_edge.js — ops-edge-api
-// L2 Guard + L3 Policy + SSE (/api/chat) + Lead capture (/api/lead) + optional pack proxy
-// Providers: OSS(OpenAI-compatible), Grok (xAI), Gemini, OpenAI.
-// ENV (all TEXT):
-
 //   OSS_BASE_URL            e.g. "https://api.together.xyz/v1"
 //   OSS_MODEL_ID            e.g. "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
 //   GROK_BASE_URL           "https://api.x.ai/v1"
 //   GROK_MODEL_ID           e.g. "grok-2-latest"
 //   GEMINI_BASE_URL         "https://generativelanguage.googleapis.com/v1beta"
-//   GEMINI_MODEL_ID         e.g. "gemini-2.5-flash"
-//   OPENAI_BASE_URL         "https://api.openai.com/v1"
-//   OPENAI_MODEL_ID         e.g. "gpt-4o-mini"
 //   LEADS_TTL_DAYS          e.g. "30" (omit for no TTL)
 // -------------------- Constants --------------------
 const MAX_BODY_BYTES = 64 * 1024;
