@@ -1,64 +1,26 @@
-// js/chat.js — lightweight client wired to the Cloudflare Worker chat API
+// chat.js — sanitized client placeholder (no external AI calls)
 // Usage: import this script in a page that defines appendMessage(role, text, meta?)
-// and optionally provides window.FallbackKB.reply(text, { locale }) for local replies.
-
-const API_BASE = "https://llm-chattia.grabem-holdem-nuts-right.workers.dev";
+// The handler now echoes locally without contacting any backend or LLM provider.
 
 async function sendMessage(userText) {
   // 1) Show user's message
   appendMessage("user", userText);
 
   try {
-    const body = {
-      messages: [
-        { role: "user", content: userText }
-      ],
-      metadata: {
-        // later you can add training_memory, tier, etc.
-      }
-    };
+    // 2) Provide a deterministic local response
+    const replyText = "Chattia backend is offline. This is a local placeholder response.";
 
-    const res = await fetch(API_BASE + "/api/chat", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-        // later: X-Integrity, X-Request-Signature, etc.
-      },
-      body: JSON.stringify(body)
-    });
-
-    const data = await res.json();
-
-    let replyText = (data && data.reply) ? String(data.reply).trim() : "";
-    const confidence = (data && data.confidence) || "unknown";
-
-    let usedFallback = false;
-
-    // 2) Decide whether to fallback
-    if (!replyText || confidence === "low") {
-      if (window.FallbackKB && typeof window.FallbackKB.reply === "function") {
-        const fb = window.FallbackKB.reply(userText, { locale: "auto" });
-        replyText = fb.text || "I’m here to help with OPS.";
-        usedFallback = true;
-      }
-    }
-
-    // 3) Render assistant response (original or fallback)
+    // 3) Render assistant response
     appendMessage("assistant", replyText, {
-      confidence,
-      escalated: !!data.escalated,
-      usedFallback
+      confidence: "n/a",
+      escalated: false,
+      usedFallback: true,
     });
-
   } catch (err) {
     console.error("chat error", err);
-    const fb = window.FallbackKB && window.FallbackKB.reply
-      ? window.FallbackKB.reply("fallback network error", { locale: "en" })
-      : { text: "I’m having trouble connecting right now, but OPS is still here to help you." };
-
-    appendMessage("assistant", fb.text, {
-      confidence: "low",
-      usedFallback: true
+    appendMessage("assistant", "Temporary issue processing your message.", {
+      confidence: "n/a",
+      usedFallback: true,
     });
   }
 }
